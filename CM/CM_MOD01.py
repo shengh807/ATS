@@ -1,3 +1,11 @@
+
+#
+# 작성일 : 2021-01-18
+# 작성자 : Daniel Nho
+# 고객모듈
+#
+#
+
 import sys
 from PyQt5.QtWidgets import *
 from MI import MI_MOD01
