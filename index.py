@@ -1,3 +1,10 @@
+
+#
+# 작성일 : 2021-01-20
+# 작성자 : Daniel Nho
+# MAIN 모듈
+#
+
 import sys
 from PyQt5.QtWidgets import *
 from MI import MI_MOD01

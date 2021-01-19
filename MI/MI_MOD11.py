@@ -3,6 +3,7 @@
 # 작성자 : Daniel Nho
 # DB처리 공통모듈
 #
+
 import pymysql
 import requests
 from bs4 import BeautifulSoup
