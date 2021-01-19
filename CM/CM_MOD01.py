@@ -4,7 +4,6 @@
 # 작성자 : Daniel Nho
 # 고객모듈
 #
-#
 
 import sys
 from PyQt5.QtWidgets import *
