@@ -5,7 +5,7 @@
 #
 
 import sys
-from MI import MI_MOD01
+from MI import MI_MOD02
 
 
 class TR_KW_opw00001:

@@ -7,11 +7,11 @@
 
 import sys
 from PyQt5.QtWidgets import *
-from MI import MI_MOD01
+from MI import MI_MOD02
 import time
 from pandas import DataFrame
 import datetime
-from MI import MI_MOD01
+from MI import MI_MOD02
 
 
 class CM_MOD01:

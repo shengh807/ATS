@@ -7,25 +7,26 @@
 
 import sys
 from PyQt5.QtWidgets import *
-from MI import MI_MOD01
+from MI import MI_MOD02
 from ST import ST_MOD01
 from CM import CM_MOD01
 import time
 from pandas import DataFrame
 import datetime
 
+
 class ATS:
     def __init__(self):
         print("__init__")
         # 키움증권 공통모듈
-        self.mi_mod01 = MI_MOD01.MI_MOD01()
-        self.mi_mod01.comm_connect() # 키움 공통모듈
+        self.mi_mod02 = MI_MOD02.MI_MOD02()  # 키움 공통모듈
+        self.mi_mod02.comm_connect()  # 로그인
 
         # 주식모듈
-        self.st_mod01 = ST_MOD01.ST_MOD01(self.mi_mod01)
+        self.st_mod01 = ST_MOD01.ST_MOD01(self.mi_mod02)
 
         # 고객모듈
-        self.cm_mod01 = CM_MOD01.CM_MOD01(self.mi_mod01)
+        self.cm_mod01 = CM_MOD01.CM_MOD01(self.mi_mod02)
 
 
     def run(self):
@@ -48,6 +49,7 @@ class ATS:
 
         # 급등리스트 파일에 쓴다
         self.st_mod01.update_buy_list(buy_list)
+
 
 if __name__ == "__main__":
     print("__main__")

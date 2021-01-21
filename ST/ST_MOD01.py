@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtWidgets import *
-from MI import MI_MOD01
+from MI import MI_MOD02
 import time
 from pandas import DataFrame
 import datetime
@@ -8,43 +8,30 @@ import datetime
 MARKET_KOSPI   = 0
 MARKET_KOSDAQ  = 10
 
+from TR import TR_KW_OPT10081
+
 class ST_MOD01:
-    def __init__(self, mi_mod01):
+    def __init__(self, mi_mod02):
         print("ST_MOD01__init__")
         # 공통모듈
-        self.mi_mod01 = mi_mod01
+        self.mi_mod02 = mi_mod02
+        self.tr_kw_opt00081 = TR_KW_OPT10081.TR_KW_OPT10081(self.mi_mod02)
 
     # 코스피, 코스닥 종목코드 가지고옴.
     def get_code_list(self):
         print("get_code_list")
-        self.kospi_codes = self.mi_mod01.get_code_list_by_market(MARKET_KOSPI)
-        self.kosdaq_codes = self.mi_mod01.get_code_list_by_market(MARKET_KOSDAQ)
+        self.kospi_codes = self.mi_mod02.get_code_list_by_market(MARKET_KOSPI)
+        self.kosdaq_codes = self.mi_mod02.get_code_list_by_market(MARKET_KOSDAQ)
         print("kospi_codes : ")
         print(self.kospi_codes)
         print(self.kosdaq_codes)
 
-    # opt10081 주식일봉차트조회요청
-    def get_ohlcv(self, code, start):
-        # print("get_ohlcv")
-        self.mi_mod01.ohlcv = {'date': [], 'open': [], 'high': [], 'low': [], 'close': [], 'volume': []}
-
-        self.mi_mod01.set_input_value("종목코드", code)
-        self.mi_mod01.set_input_value("기준일자", start)
-        self.mi_mod01.set_input_value("수정주가구분", 1)
-        self.mi_mod01.comm_rq_data("opt10081_req", "opt10081", 0, "0101")
-        time.sleep(self.mi_mod01.TR_REQ_TIME_INTERVAL)
-
-        print(self.mi_mod01.ohlcv)
-        df = DataFrame(self.mi_mod01.ohlcv, columns=['open', 'high', 'low', 'close', 'volume'],
-                       index=self.mi_mod01.ohlcv['date'])
-        print(df)
-        return df
 
     # 급등주인지 확인한다
     def check_speedy_rising_volume(self, code):
         # print("check_speedy_rising_volume")
         today = datetime.datetime.today().strftime("%Y%m%d") # 20210118
-        df = self.get_ohlcv(code, today)
+        df = self.tr_kw_opt00081.get_ohlcv(code, today)
         volumes = df['volume']
 
         if len(volumes) < 21:
