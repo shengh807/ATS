@@ -50,6 +50,16 @@ class ATS:
         # 급등리스트 파일에 쓴다
         self.st_mod01.update_buy_list(buy_list)
 
+        # self.st_mod01.reset_data_opw00018()
+        # account_number = self.mi_mod02.get_login_info("ACCNO")
+        # print(account_number)
+        # account_number = account_number.split(';')[0]
+        # print(account_number)
+        #
+        # self.mi_mod02.set_input_value("계좌번호", account_number)
+        # self.mi_mod02.comm_rq_data("opw00018_req", "opw00018", 0, "2000")
+        # print(self.mi_mod02.opw00018_output['single'])
+        # print(self.mi_mod02.opw00018_output['multi'])
 
 if __name__ == "__main__":
     print("__main__")

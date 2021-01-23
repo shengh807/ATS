@@ -9,6 +9,7 @@ MARKET_KOSPI   = 0
 MARKET_KOSDAQ  = 10
 
 from TR import TR_KW_OPT10081
+from TR import TR_KW_OPW00018
 
 class ST_MOD01:
     def __init__(self, mi_mod02):
@@ -16,6 +17,7 @@ class ST_MOD01:
         # 공통모듈
         self.mi_mod02 = mi_mod02
         self.tr_kw_opt00081 = TR_KW_OPT10081.TR_KW_OPT10081(self.mi_mod02)
+        self.tr_kw_opw00018 = TR_KW_OPW00018.TR_KW_OPW00018(self.mi_mod02)
 
     # 코스피, 코스닥 종목코드 가지고옴.
     def get_code_list(self):
@@ -31,7 +33,8 @@ class ST_MOD01:
     def check_speedy_rising_volume(self, code):
         # print("check_speedy_rising_volume")
         today = datetime.datetime.today().strftime("%Y%m%d") # 20210118
-        df = self.tr_kw_opt00081.get_ohlcv(code, today)
+        df = self.tr_kw_opt00081.tran_opt10081(code, today)
+        print(self.tr_kw_opt10081.data_opt10081)
         volumes = df['volume']
 
         if len(volumes) < 21:

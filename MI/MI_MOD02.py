@@ -15,7 +15,7 @@ import sqlite3
 from MI import MI_MOD01
 
 from TR import TR_KW_OPT10081
-from TR import TR_KW_opw00001
+from TR import TR_KW_OPW00018
 
 
 class MI_MOD02(QAxWidget):
@@ -33,6 +33,7 @@ class MI_MOD02(QAxWidget):
         # TR모듈
         # self.tr_kw_opw00001 = TR_KW_opw00001.TR_KW_opw00001()
         self.tr_kw_opt10081 = TR_KW_OPT10081.TR_KW_OPT10081(self)
+        self.tr_kw_opw00018 = TR_KW_OPW00018.TR_KW_OPW00018(self)
 
     def _create_mi_mod01_instance(self):
         self.setControl("KHOPENAPI.KHOpenAPICtrl.1")
@@ -82,13 +83,16 @@ class MI_MOD02(QAxWidget):
         self.tr_event_loop.exec_()
 
     def comm_get_data(self, code, real_type, field_name, index, item_name):
+        # print("CommGetData("+code+", "+real_type+", "+field_name+", "+chr(index)+", "+item_name+")")
         ret = self.dynamicCall("CommGetData(QString, QString, QString, int, QString)", code,
                                real_type, field_name, index, item_name)
+        # print(ret)
         return ret.strip()
 
     def get_repeat_cnt(self, trcode, rqname):
+        print("GetRepeatCnt (" + trcode + ", " + rqname + ")")
         ret = self.dynamicCall("GetRepeatCnt(QString, QString)", trcode, rqname)
-        print("get_repeat_cnt (" + trcode + "," + rqname + ") : " + ret)
+        print(ret)
         return ret
 
     def send_order(self, rqname, screen_no, acc_no, order_type, code, quantity, price, hoga, order_no):
@@ -103,49 +107,6 @@ class MI_MOD02(QAxWidget):
         ret = self.dynamicCall("KOA_Functions(QString, QString)", "GetServerGubun", "")
         return ret
 
-    def _opw00018(self, rqname, trcode):
-        # single data
-        total_purchase_price = self._comm_get_data(trcode, "", rqname, 0, "총매입금액")
-        total_eval_price = self._comm_get_data(trcode, "", rqname, 0, "총평가금액")
-        total_eval_profit_loss_price = self._comm_get_data(trcode, "", rqname, 0, "총평가손익금액")
-        total_earning_rate = self._comm_get_data(trcode, "", rqname, 0, "총수익률(%)")
-        estimated_deposit = self._comm_get_data(trcode, "", rqname, 0, "추정예탁자산")
-
-        self.opw00018_output['single'].append(self.MI_MOD01.change_format(total_purchase_price))
-        self.opw00018_output['single'].append(self.MI_MOD01.change_format(total_eval_price))
-        self.opw00018_output['single'].append(self.MI_MOD01.change_format(total_eval_profit_loss_price))
-
-        total_earning_rate = self.MI_MOD01.change_format(total_earning_rate)
-
-        if self.get_server_gubun():
-            total_earning_rate = float(total_earning_rate) / 100
-            total_earning_rate = str(total_earning_rate)
-
-        self.opw00018_output['single'].append(total_earning_rate)
-
-        self.opw00018_output['single'].append(self.MI_MOD01.change_format(estimated_deposit))
-
-        # multi data
-        rows = self._get_repeat_cnt(trcode, rqname)
-        for i in range(rows):
-            name = self._comm_get_data(trcode, "", rqname, i, "종목명")
-            quantity = self._comm_get_data(trcode, "", rqname, i, "보유수량")
-            purchase_price = self._comm_get_data(trcode, "", rqname, i, "매입가")
-            current_price = self._comm_get_data(trcode, "", rqname, i, "현재가")
-            eval_profit_loss_price = self._comm_get_data(trcode, "", rqname, i, "평가손익")
-            earning_rate = self._comm_get_data(trcode, "", rqname, i, "수익률(%)")
-
-            quantity = self.MI_MOD01.change_format(quantity)
-            purchase_price = self.MI_MOD01.change_format(purchase_price)
-            current_price = self.MI_MOD01.change_format(current_price)
-            eval_profit_loss_price = self.MI_MOD01.change_format(eval_profit_loss_price)
-            earning_rate = self.MI_MOD01.change_format2(earning_rate)
-
-            self.opw00018_output['multi'].append([name, quantity, purchase_price, current_price, eval_profit_loss_price,
-                                                  earning_rate])
-
-    # def reset_opw00018_output(self):
-    #     self.opw00018_output = {'single': [], 'multi': []}
 
     def _receive_tr_data(self, screen_no, rqname, trcode, record_name, next, unused1, unused2, unused3, unused4):
         print("_receive_tr_data start!! - rqname[" + rqname + "] trcode[" + trcode + "]")
@@ -156,6 +117,7 @@ class MI_MOD02(QAxWidget):
 
         if rqname == "opt10081_req":
             self.tr_kw_opt10081.opt10081(rqname, trcode)
+            # print(self.tr_kw_opt10081.data_opt10081)
         elif rqname == "opw00001_req":
             self.tr_kw_opw00001.opw00001(rqname, trcode)
         elif rqname == "opw00018_req":
