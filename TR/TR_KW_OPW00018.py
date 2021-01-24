@@ -45,6 +45,22 @@ class TR_KW_OPW00018:
         self.mi_mod02 = mi_mod02
         self.data_opw00018 = {'single': [], 'multi': []}
 
+
+    # OPW00018 계좌평가잔고내역요청
+    def tran_opw00018(self, accno):
+        print("tran_OPW00018")
+
+        self.mi_mod02.set_input_value("계좌번호", accno)
+        self.mi_mod02.set_input_value("비밀번호", "0320")
+        self.mi_mod02.set_input_value("비밀번호입력매체구분", "00")
+        self.mi_mod02.set_input_value("조회구분", "1");
+
+        self.mi_mod02.comm_rq_data("opw00018_req", "opw00018", 0, "2000")
+        time.sleep(self.mi_mod02.TR_REQ_TIME_INTERVAL)
+
+        print(self.data_opw00018)
+
+    # RESPONSE 데이터 처리
     def opw00018(self, rqname, trcode):
         print("opw00018")
         # single data
@@ -86,33 +102,8 @@ class TR_KW_OPW00018:
 
             self.data_opw00018['multi'].append([name, quantity, purchase_price, current_price, eval_profit_loss_price,
                                                 earning_rate])
-            print(self.data_opw00018)
+
+        # print(self.data_opw00018)
 
     def reset_data_opw00018(self):
         self.data_opw00018 = {'single': [], 'multi': []}
-
-
-    # OPW00018 계좌평가잔고내역요청
-    def tran_opw00018(self, account_number):
-        print("tran_OPW00018")
-
-        self.mi_mod02.set_input_value("계좌번호", account_number)
-        self.mi_mod02.set_input_value("비밀번호", "0320")
-        self.mi_mod02.comm_rq_data("opw00018_req", "opw00018", 0, "2000")
-        print(self.mi_mod02.tr_kw_opw00018.data_opw00018['single'])
-        print(self.mi_mod02.tr_kw_opw00018.data_opw00018['multi'])
-
-
-        # self.mi_mod02.data_OPW00081 = {'date': [], 'open': [], 'high': [], 'low': [], 'close': [], 'volume': []}
-
-        # self.mi_mod02.set_input_value("종목코드", code)
-        # self.mi_mod02.set_input_value("기준일자", start)
-        # self.mi_mod02.set_input_value("수정주가구분", 1)
-        # self.mi_mod02.comm_rq_data("OPW00081_req", "OPW00081", 0, "0101")
-        # time.sleep(self.mi_mod02.TR_REQ_TIME_INTERVAL)
-
-        print(self.mi_mod02.data_OPW00081)
-        df = DataFrame(self.mi_mod02.data_OPW00081, columns=['open', 'high', 'low', 'close', 'volume'],
-                       index=self.mi_mod02.data_OPW00081['date'])
-        print(df)
-        return df

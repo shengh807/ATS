@@ -14,6 +14,7 @@ import sqlite3
 
 from TR import TR_KW_OPT10081
 from TR import TR_KW_OPW00018
+from TR import TR_KW_OPW00001
 
 
 class MI_MOD02(QAxWidget):
@@ -32,6 +33,7 @@ class MI_MOD02(QAxWidget):
         # self.tr_kw_opw00001 = TR_KW_opw00001.TR_KW_opw00001()
         self.tr_kw_opt10081 = TR_KW_OPT10081.TR_KW_OPT10081(self)
         self.tr_kw_opw00018 = TR_KW_OPW00018.TR_KW_OPW00018(self)
+        self.tr_kw_opw00001 = TR_KW_OPW00001.TR_KW_OPW00001(self)
 
     def _create_mi_mod02_instance(self):
         self.setControl("KHOPENAPI.KHOpenAPICtrl.1")

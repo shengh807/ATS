@@ -17,7 +17,8 @@ class ST_MOD01:
         # 공통모듈
         self.mi_mod02 = mi_mod02
         self.tr_kw_opt10081 = self.mi_mod02.tr_kw_opt10081
-        self.tr_kw_opw00018 = TR_KW_OPW00018.TR_KW_OPW00018(self.mi_mod02)
+        self.tr_kw_opw00018 = self.mi_mod02.tr_kw_opw00018
+        self.tr_kw_opw00001 = self.mi_mod02.tr_kw_opw00001
 
     # 코스피, 코스닥 종목코드 가지고옴.
     def get_code_list(self):
@@ -64,14 +65,15 @@ class ST_MOD01:
             f.writelines("매수;", code, ";시장가;10;0;매수전")
         f.close()
 
-    def get_account_amount(self):
+    def get_account_amount(self, accno):
         print("get_account_amount")
 
-        account_number = self.mi_mod02.get_login_info("ACCNO")
-        print(account_number)
-        account_number_array = account_number.split(';')
-        print(account_number_array)
-        account_number = account_number_array[0]
-        print(account_number)
+        df = self.tr_kw_opw00018.tran_opw00018(accno)
 
-        df = self.tr_kw_opw00018.tran_opw00018(account_number)
+        # for account_number in account_number:
+        #     df = self.tr_kw_opw00018.tran_opw00018(account_number)
+
+    def get_yesugum_amount(self, accno):
+        print("get_account_amount")
+
+        df = self.tr_kw_opw00001.tran_opw00001(accno)

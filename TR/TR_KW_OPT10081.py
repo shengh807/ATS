@@ -39,6 +39,23 @@ class TR_KW_OPT10081:
         self.mi_mod02 = mi_mod02
         self.data_opt10081 = {'date': [], 'open': [], 'high': [], 'low': [], 'close': [], 'volume': []}
 
+
+    # opt10081 주식일봉차트조회요청
+    def tran_opt10081(self, code, start):
+        print("tran_opt10081")
+
+        self.mi_mod02.set_input_value("종목코드", code)
+        self.mi_mod02.set_input_value("기준일자", start)
+        self.mi_mod02.set_input_value("수정주가구분", 1)
+        self.mi_mod02.comm_rq_data("opt10081_req", "opt10081", 0, "0101")
+        time.sleep(self.mi_mod02.TR_REQ_TIME_INTERVAL)
+
+        # print(self.data_opt10081)
+        df = DataFrame(self.data_opt10081, columns=['open', 'high', 'low', 'close', 'volume'],
+                       index=self.data_opt10081['date'])
+        # print(df)
+        return df
+
     # RESPONSE 데이터 처리
     def opt10081(self, rqname, trcode):
         print("opt10081")
@@ -59,19 +76,3 @@ class TR_KW_OPT10081:
             self.data_opt10081['close'].append(int(opt10081_close))
             self.data_opt10081['volume'].append(int(opt10081_volume))
 
-
-    # opt10081 주식일봉차트조회요청
-    def tran_opt10081(self, code, start):
-        print("tran_opt10081")
-
-        self.mi_mod02.set_input_value("종목코드", code)
-        self.mi_mod02.set_input_value("기준일자", start)
-        self.mi_mod02.set_input_value("수정주가구분", 1)
-        self.mi_mod02.comm_rq_data("opt10081_req", "opt10081", 0, "0101")
-        time.sleep(self.mi_mod02.TR_REQ_TIME_INTERVAL)
-
-        # print(self.data_opt10081)
-        df = DataFrame(self.data_opt10081, columns=['open', 'high', 'low', 'close', 'volume'],
-                       index=self.data_opt10081['date'])
-        # print(df)
-        return df

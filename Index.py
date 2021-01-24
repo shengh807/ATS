@@ -32,14 +32,14 @@ class ATS:
     def run(self):
         print("run!!")
 
-        # 코드리스트 가지고옴
+        # 종목 코드리스트 가지고옴
         self.st_mod01.get_code_list()
 
-        # 계좌번호 가지고온다
-        account = self.cm_mod01.get_account_list()
-        print("계좌번호 : " + account)
+        # 1) 계좌번호 가지고온다
+        # account = self.cm_mod01.get_account_list()
+        # print("계좌번호 : " + account)
 
-        # # 급등주 파악한다
+        # 2) 급등주 파악한다
         # buy_list = []
         # num = len(self.st_mod01.kosdaq_codes)
         # for i, code in enumerate(self.st_mod01.kosdaq_codes):
@@ -47,12 +47,21 @@ class ATS:
         #     if self.st_mod01.check_speedy_rising_volume(code):
         #         buy_list.append(code)
         #
-        # # 급등리스트 파일에 쓴다
-        # self.st_mod01.update_buy_list(buy_list)
+        # self.st_mod01.update_buy_list(buy_list) # 급등리스트 파일에 쓴다
 
-        # 잔고를 파악한다
-        self.st_mod01.get_account_amount()
+        # 3) 잔고를 파악한다
+        # accno = self.mi_mod02.get_login_info("ACCNO")
+        # accno_array = accno.split(';')
+        # print(accno_array)
+        # accno = accno_array[0]
+        # self.st_mod01.get_account_amount(accno)
 
+        # 4) 예수금 잔고를 파악한다
+        accno = self.mi_mod02.get_login_info("ACCNO")
+        accno_array = accno.split(';')
+        print(accno_array)
+        accno = accno_array[0]
+        self.st_mod01.get_yesugum_amount(accno)
 
 if __name__ == "__main__":
     print("__main__")
