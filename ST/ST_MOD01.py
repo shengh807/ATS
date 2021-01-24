@@ -16,7 +16,7 @@ class ST_MOD01:
         print("ST_MOD01__init__")
         # 공통모듈
         self.mi_mod02 = mi_mod02
-        self.tr_kw_opt00081 = TR_KW_OPT10081.TR_KW_OPT10081(self.mi_mod02)
+        self.tr_kw_opt10081 = self.mi_mod02.tr_kw_opt10081
         self.tr_kw_opw00018 = TR_KW_OPW00018.TR_KW_OPW00018(self.mi_mod02)
 
     # 코스피, 코스닥 종목코드 가지고옴.
@@ -33,7 +33,7 @@ class ST_MOD01:
     def check_speedy_rising_volume(self, code):
         # print("check_speedy_rising_volume")
         today = datetime.datetime.today().strftime("%Y%m%d") # 20210118
-        df = self.tr_kw_opt00081.tran_opt10081(code, today)
+        df = self.tr_kw_opt10081.tran_opt10081(code, today)
         print(self.tr_kw_opt10081.data_opt10081)
         volumes = df['volume']
 
@@ -43,7 +43,7 @@ class ST_MOD01:
         sum_vol20 = 0
         today_vol = 0
 
-        print (volumes)
+        print(volumes)
 
         for i, vol in enumerate(volumes):
             if i == 0:
@@ -63,3 +63,15 @@ class ST_MOD01:
         for code in buy_list:
             f.writelines("매수;", code, ";시장가;10;0;매수전")
         f.close()
+
+    def get_account_amount(self):
+        print("get_account_amount")
+
+        account_number = self.mi_mod02.get_login_info("ACCNO")
+        print(account_number)
+        account_number_array = account_number.split(';')
+        print(account_number_array)
+        account_number = account_number_array[0]
+        print(account_number)
+
+        df = self.tr_kw_opw00018.tran_opw00018(account_number)

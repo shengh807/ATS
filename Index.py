@@ -39,27 +39,20 @@ class ATS:
         account = self.cm_mod01.get_account_list()
         print("계좌번호 : " + account)
 
-        # 급등주 파악한다
-        buy_list = []
-        num = len(self.st_mod01.kosdaq_codes)
-        for i, code in enumerate(self.st_mod01.kosdaq_codes):
-            print(i, '/', num, '/', code)
-            if self.st_mod01.check_speedy_rising_volume(code):
-                buy_list.append(code)
-
-        # 급등리스트 파일에 쓴다
-        self.st_mod01.update_buy_list(buy_list)
-
-        # self.st_mod01.reset_data_opw00018()
-        # account_number = self.mi_mod02.get_login_info("ACCNO")
-        # print(account_number)
-        # account_number = account_number.split(';')[0]
-        # print(account_number)
+        # # 급등주 파악한다
+        # buy_list = []
+        # num = len(self.st_mod01.kosdaq_codes)
+        # for i, code in enumerate(self.st_mod01.kosdaq_codes):
+        #     print(i, '/', num, '/', code)
+        #     if self.st_mod01.check_speedy_rising_volume(code):
+        #         buy_list.append(code)
         #
-        # self.mi_mod02.set_input_value("계좌번호", account_number)
-        # self.mi_mod02.comm_rq_data("opw00018_req", "opw00018", 0, "2000")
-        # print(self.mi_mod02.opw00018_output['single'])
-        # print(self.mi_mod02.opw00018_output['multi'])
+        # # 급등리스트 파일에 쓴다
+        # self.st_mod01.update_buy_list(buy_list)
+
+        # 잔고를 파악한다
+        self.st_mod01.get_account_amount()
+
 
 if __name__ == "__main__":
     print("__main__")

@@ -12,8 +12,6 @@ import time
 import pandas as pd
 import sqlite3
 
-from MI import MI_MOD01
-
 from TR import TR_KW_OPT10081
 from TR import TR_KW_OPW00018
 
@@ -24,7 +22,7 @@ class MI_MOD02(QAxWidget):
         super().__init__()
 
         # INIT 함수 호출
-        self._create_mi_mod01_instance()  # 키움증권 Open API 인스턴스 생성
+        self._create_mi_mod02_instance()  # 키움증권 Open API 인스턴스 생성
         self._set_signal_slots()  # PyQt5 콜백함수 셋팅
 
         # 공통변수 설정
@@ -35,7 +33,7 @@ class MI_MOD02(QAxWidget):
         self.tr_kw_opt10081 = TR_KW_OPT10081.TR_KW_OPT10081(self)
         self.tr_kw_opw00018 = TR_KW_OPW00018.TR_KW_OPW00018(self)
 
-    def _create_mi_mod01_instance(self):
+    def _create_mi_mod02_instance(self):
         self.setControl("KHOPENAPI.KHOpenAPICtrl.1")
 
     def _set_signal_slots(self):
@@ -107,7 +105,6 @@ class MI_MOD02(QAxWidget):
         ret = self.dynamicCall("KOA_Functions(QString, QString)", "GetServerGubun", "")
         return ret
 
-
     def _receive_tr_data(self, screen_no, rqname, trcode, record_name, next, unused1, unused2, unused3, unused4):
         print("_receive_tr_data start!! - rqname[" + rqname + "] trcode[" + trcode + "]")
         if next == '2':
@@ -121,7 +118,7 @@ class MI_MOD02(QAxWidget):
         elif rqname == "opw00001_req":
             self.tr_kw_opw00001.opw00001(rqname, trcode)
         elif rqname == "opw00018_req":
-            self._opw00018(rqname, trcode)
+            self.tr_kw_opw00018.opw00018(rqname, trcode)
 
         try:
             self.tr_event_loop.exit()
@@ -138,14 +135,14 @@ class MI_MOD02(QAxWidget):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    mi_mod01 = MI_MOD02()
-    mi_mod01.comm_connect()
+    mi_mod02 = MI_MOD02()
+    mi_mod02.comm_connect()
 
-    mi_mod01.reset_opw00018_output()
-    account_number = mi_mod01.get_login_info("ACCNO")
+    mi_mod02.reset_opw00018_output()
+    account_number = mi_mod02.get_login_info("ACCNO")
     account_number = account_number.split(';')[0]
 
-    mi_mod01.set_input_value("계좌번호", account_number)
-    mi_mod01.comm_rq_data("opw00018_req", "opw00018", 0, "2000")
-    print(mi_mod01.opw00018_output['single'])
-    print(mi_mod01.opw00018_output['multi'])
+    mi_mod02.set_input_value("계좌번호", account_number)
+    mi_mod02.comm_rq_data("opw00018_req", "opw00018", 0, "2000")
+    print(mi_mod02.opw00018_output['single'])
+    print(mi_mod02.opw00018_output['multi'])

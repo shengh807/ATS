@@ -5,9 +5,7 @@
 #
 
 
-class MI_MOD01:
-    def __init__(self):
-        print("MI_MOD01__init__")
+class StringUtils:
 
     @staticmethod
     def change_format(data):
