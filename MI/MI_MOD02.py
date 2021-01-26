@@ -134,17 +134,3 @@ class MI_MOD02(QAxWidget):
         print(self.get_chejan_data(900))
         print(self.get_chejan_data(901))
 
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    mi_mod02 = MI_MOD02()
-    mi_mod02.comm_connect()
-
-    mi_mod02.reset_opw00018_output()
-    account_number = mi_mod02.get_login_info("ACCNO")
-    account_number = account_number.split(';')[0]
-
-    mi_mod02.set_input_value("계좌번호", account_number)
-    mi_mod02.comm_rq_data("opw00018_req", "opw00018", 0, "2000")
-    print(mi_mod02.opw00018_output['single'])
-    print(mi_mod02.opw00018_output['multi'])

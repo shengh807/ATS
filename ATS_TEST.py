@@ -20,14 +20,13 @@ class ATS:
         print("__init__")
         # 키움증권 공통모듈
         self.mi_mod02 = MI_MOD02.MI_MOD02()  # 키움 공통모듈
-        self.mi_mod02.comm_connect()  # 로그인
 
         # 주식모듈
         self.st_mod01 = ST_MOD01.ST_MOD01(self.mi_mod02)
 
         # 고객모듈
         self.cm_mod01 = CM_MOD01.CM_MOD01(self.mi_mod02)
-
+        self.cm_mod01.login()  # 로그인
 
     def run(self):
         print("run!!")
@@ -57,10 +56,8 @@ class ATS:
         # self.st_mod01.get_account_amount(accno)
 
         # 4) 예수금 잔고를 파악한다
-        accno = self.mi_mod02.get_login_info("ACCNO")
-        accno_array = accno.split(';')
-        print(accno_array)
-        accno = accno_array[0]
+        accno_list = self.cm_mod01.get_account_list()
+        accno = accno_list[0]
         self.st_mod01.get_yesugum_amount(accno)
 
 if __name__ == "__main__":

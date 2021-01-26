@@ -7,21 +7,25 @@
 
 import sys
 from PyQt5.QtWidgets import *
-from MI import MI_MOD02
 import time
 from pandas import DataFrame
 import datetime
-from MI import MI_MOD02
 
 
 class CM_MOD01:
-    def __init__(self, mi_mod01):
+    def __init__(self, mi_mod02):
         print("CM_MOD01__init__")
         # 공통모듈
-        self.mi_mod01 = mi_mod01
+        self.mi_mod02 = mi_mod02
+
+    def login(self):
+        self.mi_mod02.comm_connect()  # 로그인
 
     def get_account_list(self):
         # print("get_account_list")
-        account_num = self.mi_mod01.dynamicCall("GetLoginInfo(QString)", ["ACCNO"])
+        result = self.mi_mod02.get_login_info("ACCNO")
 
-        return account_num
+        accno_list = result.split(';')
+        accno_list.remove('')
+
+        return accno_list
