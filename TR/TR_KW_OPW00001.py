@@ -40,12 +40,12 @@ class TR_KW_OPW00001:
 
     # OPW00018 계좌평가잔고내역요청
     def tran_opw00001(self, accno):
-        print("tran_OPW00018")
+        print("tran_OPW00001")
 
         self.mi_mod02.set_input_value("계좌번호", accno)
         self.mi_mod02.set_input_value("비밀번호", "0320")
         self.mi_mod02.set_input_value("비밀번호입력매체구분", "00")
-        self.mi_mod02.set_input_value("조회구분", "1");
+        self.mi_mod02.set_input_value("조회구분", "1")
 
         self.mi_mod02.comm_rq_data("opw00001_req", "opw00001", 0, "3000")
         time.sleep(self.mi_mod02.TR_REQ_TIME_INTERVAL)

@@ -36,6 +36,7 @@ class ST_MOD01:
         today = datetime.datetime.today().strftime("%Y%m%d") # 20210118
         df = self.tr_kw_opt10081.tran_opt10081(code, today)
         print(self.tr_kw_opt10081.data_opt10081)
+
         volumes = df['volume']
 
         if len(volumes) < 21:
@@ -74,6 +75,6 @@ class ST_MOD01:
         #     df = self.tr_kw_opw00018.tran_opw00018(account_number)
 
     def get_yesugum_amount(self, accno):
-        print("get_account_amount")
+        print("get_yesugum_amount")
 
         df = self.tr_kw_opw00001.tran_opw00001(accno)

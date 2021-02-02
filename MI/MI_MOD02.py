@@ -27,7 +27,7 @@ class MI_MOD02(QAxWidget):
         self._set_signal_slots()  # PyQt5 콜백함수 셋팅
 
         # 공통변수 설정
-        self.TR_REQ_TIME_INTERVAL = 0.5
+        self.TR_REQ_TIME_INTERVAL = 4
 
         # TR모듈
         # self.tr_kw_opw00001 = TR_KW_opw00001.TR_KW_opw00001()

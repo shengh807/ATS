@@ -31,35 +31,49 @@ import sys
 from MI import MI_MOD02
 import time
 from pandas import DataFrame
+from MI import MI_MOD11
 
 
 class TR_KW_OPT10081:
     def __init__(self, mi_mod02):
         print("TR_KW_OPT10081__init__")
         self.mi_mod02 = mi_mod02
-        self.data_opt10081 = {'date': [], 'open': [], 'high': [], 'low': [], 'close': [], 'volume': []}
-
+        self.data_opt10081 = {'date': [], 'st_cd': [], 'open': [], 'high': [], 'low': [], 'close': [], 'volume': []}
+        self.st_cd = ""
 
     # opt10081 주식일봉차트조회요청
-    def tran_opt10081(self, code, start):
+    def tran_opt10081(self, st_cd, st_dt):
         print("tran_opt10081")
+        self.st_cd = st_cd
 
-        self.mi_mod02.set_input_value("종목코드", code)
-        self.mi_mod02.set_input_value("기준일자", start)
+        self.mi_mod02.set_input_value("종목코드", st_cd)
+        self.mi_mod02.set_input_value("기준일자", st_dt)
         self.mi_mod02.set_input_value("수정주가구분", 1)
         self.mi_mod02.comm_rq_data("opt10081_req", "opt10081", 0, "0101")
         time.sleep(self.mi_mod02.TR_REQ_TIME_INTERVAL)
 
         # print(self.data_opt10081)
-        df = DataFrame(self.data_opt10081, columns=['open', 'high', 'low', 'close', 'volume'],
-                       index=self.data_opt10081['date'])
+        df = DataFrame(self.data_opt10081, columns=['date', 'st_cd', 'open', 'high', 'low', 'close', 'volume'])
         # print(df)
+        self.insert_table_opt1008(df)
+
         return df
+
+    # DB Insert
+    def insert_table_opt1008(self, df):
+        print("insert_table_opt1008")
+        print(df)
+        df.set_index('date', inplace=True)
+        print(df)
+
+        mi_mod11 = MI_MOD11.MI_MOD11()
+        mi_mod11.insert_data_table("st_tb_daily_price", df)
 
     # RESPONSE 데이터 처리
     def opt10081(self, rqname, trcode):
         print("opt10081")
         data_cnt = self.mi_mod02.get_repeat_cnt(trcode, rqname)
+        self.data_opt10081 = {'date': [], 'st_cd': [], 'open': [], 'high': [], 'low': [], 'close': [], 'volume': []}
 
         for i in range(data_cnt):
             opt10081_date = self.mi_mod02.comm_get_data(trcode, "", rqname, i, "일자")
@@ -70,9 +84,9 @@ class TR_KW_OPT10081:
             opt10081_volume = self.mi_mod02.comm_get_data(trcode, "", rqname, i, "거래량")
 
             self.data_opt10081['date'].append(opt10081_date)
+            self.data_opt10081['st_cd'].append(self.st_cd)
             self.data_opt10081['open'].append(int(opt10081_open))
             self.data_opt10081['high'].append(int(opt10081_high))
             self.data_opt10081['low'].append(int(opt10081_low))
             self.data_opt10081['close'].append(int(opt10081_close))
             self.data_opt10081['volume'].append(int(opt10081_volume))
-
