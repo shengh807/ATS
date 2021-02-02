@@ -1,3 +1,8 @@
+#
+# 작성일 : 2021-01-18
+# 작성자 : Daniel Nho
+# 키움증권 주식 관련 CLASS
+#
 import sys
 from PyQt5.QtWidgets import *
 from MI import MI_MOD02

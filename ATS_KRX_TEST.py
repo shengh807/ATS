@@ -17,7 +17,8 @@ class ATS_KRX_TEST:
 
     def run(self):
         print("run!!")
-        self.mi_mod03.get_stock_infomation()
+        df = self.mi_mod03.get_stock_infomation()
+        self.mi_mod03.get_stock_price(df, '삼성전자')
 
 
 if __name__ == "__main__":
