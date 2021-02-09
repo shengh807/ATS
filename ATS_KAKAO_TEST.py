@@ -6,24 +6,24 @@
 #
 # /********************************************************************/
 
-from TR import TR_KRX_CORP0001
+from MI import MI_MOD21
 
+class ATS_KAKAO_TEST:
 
-class ATS_KRX_TEST:
     def __init__(self):
         print("__init__")
-
-        self.mi_mod03 = TR_KRX_CORP0001.TR_KRX_CORP0001()                 # 키움증권 공통모듈
+        self.mi_mod21 = MI_MOD21.MI_MOD21()                 # 키움증권 공통모듈
 
     def run(self):
         print("run!!")
-        df = self.mi_mod03.get_stock_infomation()
-        # self.mi_mod03.get_stock_price(df, '삼성전자')
+        return_code = self.mi_mod21.send_to_kakao("안녕하세요 테스트입니다")
+        if return_code.status_code != "200":
+            print(return_code.json())
 
 
 if __name__ == "__main__":
     print("__main__")
-    ats = ATS_KRX_TEST()
+    ats = ATS_KAKAO_TEST()
     ats.run()
 
 

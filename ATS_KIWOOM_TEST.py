@@ -28,27 +28,27 @@ class ATS_KIWOOM_TEST:
         self.cm_mod01.login()  # 로그인
 
         # 1) 종목 코드리스트 가지고옴
-        self.st_mod01.get_code_list()
+        # self.st_mod01.get_code_list()
 
         # 2) 계좌번호 가지고온다
         # account = self.cm_mod01.get_account_list()
         # print("계좌번호 : " + account)
 
         # 3) 급등주 파악한다
-        # self.st_mod01.get_code_list()
-        # buy_list = []
-        # num = len(self.st_mod01.kosdaq_codes)  # 코스닥
-        # for i, code in enumerate(self.st_mod01.kosdaq_codes):
-        #     print(i, '/', num, '/', code)
-        #     if self.st_mod01.check_speedy_rising_volume(code):
-        #         buy_list.append(code)
-        # # self.st_mod01.update_buy_list(buy_list) # 급등리스트 파일에 쓴다
-        #
-        # num = len(self.st_mod01.kospi_codes)  # 코스피
-        # for i, code in enumerate(self.st_mod01.kospi_codes):
-        #     print(i, '/', num, '/', code)
-        #     if self.st_mod01.check_speedy_rising_volume(code):
-        #         buy_list.append(code)
+        self.st_mod01.get_code_list()
+        buy_list = []
+        num = len(self.st_mod01.kosdaq_codes)  # 코스닥
+        for i, code in enumerate(self.st_mod01.kosdaq_codes):
+            print(i, '/', num, '/', code)
+            if self.st_mod01.check_speedy_rising_volume(code):
+                buy_list.append(code)
+        # self.st_mod01.update_buy_list(buy_list) # 급등리스트 파일에 쓴다
+
+        num = len(self.st_mod01.kospi_codes)  # 코스피
+        for i, code in enumerate(self.st_mod01.kospi_codes):
+            print(i, '/', num, '/', code)
+            if self.st_mod01.check_speedy_rising_volume(code):
+                buy_list.append(code)
 
 
         # 4) 잔고를 파악한다

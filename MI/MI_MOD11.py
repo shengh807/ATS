@@ -19,7 +19,7 @@ class MI_MOD11:
         self.conn = self.engine.connect()
         print(self.conn)
 
-    def insert_data_table(self, table_name, df):
+    def insert_batch_data_table(self, table_name, df):
         print(df)
         # for i in range(len(df)):
         #     try:
@@ -28,6 +28,17 @@ class MI_MOD11:
         #     except exc.IntegrityError:
         #         pass  # or any other action
         df.to_sql(name=table_name, con=self.engine, if_exists='append')
+
+    def insert_data_table(self, table_name, df):
+        print(df)
+        for i in range(len(df)):
+            try:
+                print(df[i:i+1])
+                df[i:i+1].to_sql(name=table_name, con=self.engine, if_exists='append')
+            except exc.IntegrityError:
+                pass  # or any other action
+        # df.to_sql(name=table_name, con=self.engine, if_exists='append')
+
 
 # #  main.py
 # url = 'https://www.ethernodes.org/network/1'
