@@ -31,50 +31,75 @@ class TR_KW_OPT10004:
         self.mi_mod02 = mi_mod02
         self.data_opt10004 = {
             'st_cd': [],
-            'co_nm': [],
-            'month_stmt': [],
-            'face_value': [],
-            'st_capital': [],
-            'listed_shares': [],
-            'credit_ratio': [],
-            'best_price_of_year': [],
-            'lowest_price_of_year': [],
-            'market_cap': [],
-            'share_of_market_capital': [],
-            'external_burnout_rate': [],
-            'substitute_price': [],
-            'st_per': [],
-            'st_eps': [],
-            'st_roe': [],
-            'st_pbr': [],
-            'st_ev': [],
-            'st_bps': [],
-            'total_revenue': [],
-            'operating_profit': [],
-            'net_income': [],
-            'day_250_highest': [],
-            'day_250_lowest': [],
-            'open': [],
-            'high': [],
-            'low': [],
-            'upper_limit_price': [],
-            'lower_limit_price': [],
-            'standard_price': [],
-            'estimated_stmt_price': [],
-            'estimated_stmt_quantity': [],
-            'best_250_day': [],
-            'best_250_ratio': [],
-            'lowest_250_day': [],
-            'lowest_250_ratio': [],
-            'close': [],
-            'contrast_symbol': [],
-            'net_change': [],
-            'the_rate_of_fluctuation': [],
-            'volume': [],
-            'compared_to_transaction': [],
-            'par_value_unit': [],
-            'outstanding_stock': [],
-            'current_ratio': []
+            'st_dt': [],
+            'sell_10_ratio': [],
+            'sell_10_remain': [],
+            'sell_10_prefer_price': [],
+            'sell_9_ratio': [],
+            'sell_9_remain': [],
+            'sell_9_prefer_price': [],
+            'sell_8_ratio': [],
+            'sell_8_remain': [],
+            'sell_8_prefer_price': [],
+            'sell_7_ratio': [],
+            'sell_7_remain': [],
+            'sell_7_prefer_price': [],
+            'sell_6_ratio': [],
+            'sell_6_remain': [],
+            'sell_6_prefer_price': [],
+            'sell_5_ratio': [],
+            'sell_5_remain': [],
+            'sell_5_prefer_price': [],
+            'sell_4_ratio': [],
+            'sell_4_remain': [],
+            'sell_4_prefer_price': [],
+            'sell_3_ratio': [],
+            'sell_3_remain': [],
+            'sell_3_prefer_price': [],
+            'sell_2_ratio': [],
+            'sell_2_remain': [],
+            'sell_2_prefer_price': [],
+            'sell_1_ratio': [],
+            'sell_priority_remain': [],
+            'sell_priority_prefer_price': [],
+            'buy_priority_prefer_price': [],
+            'buy_priority_remain': [],
+            'buy_1_ratio': [],
+            'buy_2_prefer_price': [],
+            'buy_2_remain': [],
+            'buy_2_ratio': [],
+            'buy_3_prefer_price': [],
+            'buy_3_remain': [],
+            'buy_3_ratio': [],
+            'buy_4_prefer_price': [],
+            'buy_4_remain': [],
+            'buy_4_ratio': [],
+            'buy_5_prefer_price': [],
+            'buy_5_remain': [],
+            'buy_5_ratio': [],
+            'buy_6_prefer_price': [],
+            'buy_6_remain': [],
+            'buy_6_ratio': [],
+            'buy_7_prefer_price': [],
+            'buy_7_remain': [],
+            'buy_7_ratio': [],
+            'buy_8_prefer_price': [],
+            'buy_8_remain': [],
+            'buy_8_ratio': [],
+            'buy_9_prefer_price': [],
+            'buy_9_remain': [],
+            'buy_9_ratio': [],
+            'buy_10_prefer_price': [],
+            'buy_10_remain': [],
+            'buy_10_ratio': [],
+            'sell_total_remain_before_ratio': [],
+            'sell_total_remain': [],
+            'buy_total_remain': [],
+            'buy_total_remain_before_ratio': [],
+            'sell_out_time_remain_before_ratio': [],
+            'sell_out_time_remain': [],
+            'buy_out_time_remain': [],
+            'buy_out_time_remain_before_ratio': []
         }
         self.st_cd = ""
 
@@ -272,7 +297,7 @@ class TR_KW_OPT10004:
             opt10004_sell_7_remain = self.mi_mod02.comm_get_data(trcode, "", rqname, i, "매도7차선잔량")
             opt10004_sell_7_prefer_price = self.mi_mod02.comm_get_data(trcode, "", rqname, i, "매도7차선호가")
             opt10004_sell_6_ratio = self.mi_mod02.comm_get_data(trcode, "", rqname, i, "매도6차선잔량대비")
-            opt10004_sell_6_remain = self.mi_mod02.comm_get_data(trcode, "", rqname, i, "매도6차선잔량")
+            opt10004_sell_6_remain = self.mi_mod02.comm_get_data(trcode, "", rqname, i, "매도6우선잔량")
             opt10004_sell_6_prefer_price = self.mi_mod02.comm_get_data(trcode, "", rqname, i, "매도6차선호가")
             opt10004_sell_5_ratio = self.mi_mod02.comm_get_data(trcode, "", rqname, i, "매도5차선잔량대비")
             opt10004_sell_5_remain = self.mi_mod02.comm_get_data(trcode, "", rqname, i, "매도5차선잔량")
@@ -305,8 +330,8 @@ class TR_KW_OPT10004:
             opt10004_buy_5_prefer_price = self.mi_mod02.comm_get_data(trcode, "", rqname, i, "매수5차선호가")
             opt10004_buy_5_remain = self.mi_mod02.comm_get_data(trcode, "", rqname, i, "매수5차선잔량")
             opt10004_buy_5_ratio = self.mi_mod02.comm_get_data(trcode, "", rqname, i, "매수5차선잔량대비")
-            opt10004_buy_6_prefer_price = self.mi_mod02.comm_get_data(trcode, "", rqname, i, "매수6차선호가")
-            opt10004_buy_6_remain = self.mi_mod02.comm_get_data(trcode, "", rqname, i, "매수6차선잔량")
+            opt10004_buy_6_prefer_price = self.mi_mod02.comm_get_data(trcode, "", rqname, i, "매수6우선호가")
+            opt10004_buy_6_remain = self.mi_mod02.comm_get_data(trcode, "", rqname, i, "매수6우선잔량")
             opt10004_buy_6_ratio = self.mi_mod02.comm_get_data(trcode, "", rqname, i, "매수6차선잔량대비")
             opt10004_buy_7_prefer_price = self.mi_mod02.comm_get_data(trcode, "", rqname, i, "매수7차선호가")
             opt10004_buy_7_remain = self.mi_mod02.comm_get_data(trcode, "", rqname, i, "매수7차선잔량")
