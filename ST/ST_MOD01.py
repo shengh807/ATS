@@ -21,6 +21,8 @@ class ST_MOD01:
         print("ST_MOD01__init__")
         # 공통모듈
         self.mi_mod02 = mi_mod02
+        self.tr_kw_opt10001 = self.mi_mod02.tr_kw_opt10001
+        self.tr_kw_opt10004 = self.mi_mod02.tr_kw_opt10004
         self.tr_kw_opt10081 = self.mi_mod02.tr_kw_opt10081
         self.tr_kw_opw00018 = self.mi_mod02.tr_kw_opw00018
         self.tr_kw_opw00001 = self.mi_mod02.tr_kw_opw00001
@@ -83,3 +85,15 @@ class ST_MOD01:
         print("get_yesugum_amount")
 
         df = self.tr_kw_opw00001.tran_opw00001(accno)
+
+    # 기업정보 조회
+    def get_stock_info(self, st_cd):
+        # print("get_stock_info")
+
+        df = self.tr_kw_opt10001.tran_opt10001(st_cd)
+
+    # 호가정보 조회
+    def get_level_price_info(self, st_cd):
+        # print("get_level_price_info")
+
+        df = self.tr_kw_opt10004.tran_opt10004(st_cd)

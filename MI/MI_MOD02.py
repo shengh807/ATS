@@ -12,6 +12,8 @@ import time
 import pandas as pd
 import sqlite3
 
+from TR import TR_KW_OPT10001
+from TR import TR_KW_OPT10004
 from TR import TR_KW_OPT10081
 from TR import TR_KW_OPW00018
 from TR import TR_KW_OPW00001
@@ -31,6 +33,8 @@ class MI_MOD02(QAxWidget):
 
         # TR모듈
         # self.tr_kw_opw00001 = TR_KW_opw00001.TR_KW_opw00001()
+        self.tr_kw_opt10001 = TR_KW_OPT10001.TR_KW_OPT10001(self)
+        self.tr_kw_opt10004 = TR_KW_OPT10004.TR_KW_OPT10004(self)
         self.tr_kw_opt10081 = TR_KW_OPT10081.TR_KW_OPT10081(self)
         self.tr_kw_opw00018 = TR_KW_OPW00018.TR_KW_OPW00018(self)
         self.tr_kw_opw00001 = TR_KW_OPW00001.TR_KW_OPW00001(self)
@@ -78,6 +82,7 @@ class MI_MOD02(QAxWidget):
         self.dynamicCall("SetInputValue(QString, QString)", id, value)
 
     def comm_rq_data(self, rqname, trcode, next, screen_no):
+        # print("comm_rq_data (" + trcode + ", " + rqname + ", " + str(next) + ", " + screen_no + ")")
         self.dynamicCall("CommRqData(QString, QString, int, QString)", rqname, trcode, next, screen_no)
         self.tr_event_loop = QEventLoop()
         self.tr_event_loop.exec_()
@@ -90,9 +95,9 @@ class MI_MOD02(QAxWidget):
         return ret.strip()
 
     def get_repeat_cnt(self, trcode, rqname):
-        print("GetRepeatCnt (" + trcode + ", " + rqname + ")")
+        # print("GetRepeatCnt (" + trcode + ", " + rqname + ")")
         ret = self.dynamicCall("GetRepeatCnt(QString, QString)", trcode, rqname)
-        print(ret)
+        # print(ret)
         return ret
 
     def send_order(self, rqname, screen_no, acc_no, order_type, code, quantity, price, hoga, order_no):
@@ -108,7 +113,7 @@ class MI_MOD02(QAxWidget):
         return ret
 
     def _receive_tr_data(self, screen_no, rqname, trcode, record_name, next, unused1, unused2, unused3, unused4):
-        print("_receive_tr_data start!! - rqname[" + rqname + "] trcode[" + trcode + "]")
+        # print("_receive_tr_data start!! - rqname[" + rqname + "] trcode[" + trcode + "]")
         if next == '2':
             self.remained_data = True
         else:
@@ -121,6 +126,12 @@ class MI_MOD02(QAxWidget):
             self.tr_kw_opw00001.opw00001(rqname, trcode)
         elif rqname == "opw00018_req":
             self.tr_kw_opw00018.opw00018(rqname, trcode)
+        elif rqname == "opt10001_req":
+            self.tr_kw_opt10001.opt10001(rqname, trcode)
+            # print(self.tr_kw_opt10001.data_opt10001)
+        elif rqname == "opt10004_req":
+            self.tr_kw_opt10004.opt10004(rqname, trcode)
+            print(self.tr_kw_opt10004.data_opt10004)
 
         try:
             self.tr_event_loop.exit()

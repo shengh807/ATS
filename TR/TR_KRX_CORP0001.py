@@ -55,19 +55,26 @@ class TR_KRX_CORP0001:
         return df
 
     def insert_stock_infomation(self, df):
-        df = df.rename(columns={'종목코드': 'st_cd', '종목구분': 'st_gb', '회사명': 'co_nm', '업종': 'st_ctgr'
-                                , '주요제품': 'co_pd', '상장일': 'date_of_listing', '결산월': 'month_settlement'
-                                , '대표자명': 'co_owner_nm', '홈페이지': 'co_homepage', '지역': 'co_region'})
+        df = df.rename(columns={'종목코드': 'st_cd'
+                                , '종목구분': 'st_gb'
+                                , '회사명': 'co_nm'
+                                , '업종': 'st_ctgr'
+                                , '주요제품': 'co_pd'
+                                , '상장일': 'date_of_listing'
+                                , '결산월': 'month_stmt'
+                                , '대표자명': 'co_owner_nm'
+                                , '홈페이지': 'co_homepage'
+                                , '지역': 'co_region'})
 
         df.set_index('st_cd', inplace=True)
         df['date_of_listing'''] = df['date_of_listing'].str.replace('-', '')
-        df['month_settlement'] = df['month_settlement'].str.replace('월', '')
+        df['month_stmt'] = df['month_stmt'].str.replace('월', '')
         print(df)
 
         mi_mod11 = MI_MOD11.MI_MOD11()
 
         # mi_mod11.insert_batch_data_table("st_tb_stock_info", df) # 최초 1회
-        mi_mod11.insert_data_table("st_tb_stock_info", df)
+        mi_mod11.insert_batch_data_table("st_tb_stock_info", df)
 
 ############################################################################################
 # YAHOO Finance 에서 일봉 종목가격 받아오기
