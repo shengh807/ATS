@@ -15,7 +15,6 @@ import MySQLdb
 
 class MI_MOD11:
     def __init__(self):
-        self.engine = create_engine("mysql+mysqldb://root:"+"Dkagh01!"+"@dooho.shop/dpweb?charset=utf8", encoding='utf-8')
         print(self.engine)
         self.conn = self.engine.connect()
         print(self.conn)
